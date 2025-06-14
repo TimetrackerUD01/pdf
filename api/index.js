@@ -36,7 +36,7 @@ const upload = multer({
 });
 
 // Health check endpoint
-app.get('/health', (req, res) => {
+app.get('/api/health', (req, res) => {
     res.json({ status: 'OK', message: 'API is working' });
 });
 
@@ -46,7 +46,7 @@ app.get('/', (req, res) => {
 });
 
 // API สำหรับแปลงรูปภาพเป็น PDF (ใช้งานได้บน Vercel)
-app.post('/image-to-pdf', upload.single('file'), async (req, res) => {
+app.post('/api/image-to-pdf', upload.single('file'), async (req, res) => {
     try {
         if (!req.file) {
             return res.status(400).json({ error: 'กรุณาเลือกไฟล์รูปภาพ' });
@@ -92,7 +92,7 @@ app.post('/image-to-pdf', upload.single('file'), async (req, res) => {
 });
 
 // API สำหรับแปลง Text เป็น PDF
-app.post('/text-to-pdf', upload.single('file'), async (req, res) => {
+app.post('/api/text-to-pdf', upload.single('file'), async (req, res) => {
     try {
         if (!req.file) {
             return res.status(400).json({ error: 'กรุณาเลือกไฟล์ text' });
@@ -149,7 +149,7 @@ app.post('/text-to-pdf', upload.single('file'), async (req, res) => {
 });
 
 // API สำหรับลดขนาด PDF
-app.post('/compress-pdf', upload.single('file'), async (req, res) => {
+app.post('/api/compress-pdf', upload.single('file'), async (req, res) => {
     try {
         if (!req.file) {
             return res.status(400).json({ error: 'กรุณาเลือกไฟล์ PDF' });
@@ -182,7 +182,7 @@ app.post('/compress-pdf', upload.single('file'), async (req, res) => {
 });
 
 // API สำหรับรวมไฟล์ PDF
-app.post('/merge-pdf', upload.array('files', 10), async (req, res) => {
+app.post('/api/merge-pdf', upload.array('files', 10), async (req, res) => {
     try {
         if (!req.files || req.files.length < 2) {
             return res.status(400).json({ error: 'กรุณาเลือกไฟล์ PDF อย่างน้อย 2 ไฟล์' });
@@ -217,7 +217,7 @@ app.get('/privacy', (req, res) => {
 });
 
 // Health check endpoint
-app.get('/health', (req, res) => {
+app.get('/api/health', (req, res) => {
     res.json({ 
         status: 'OK', 
         message: 'เซิร์ฟเวอร์ทำงานปกติ',
