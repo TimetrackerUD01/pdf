@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Meta Tags -->
+    <title>แปลงไฟล์ออนไลน์ฟรี | JPG เป็น PDF | Word เป็น PDF | เครื่องมือแปลงไฟล์</title>
+    <meta name="description" content="แปลงไฟล์ออนไลน์ฟรี JPG เป็น PDF, Word เป็น PDF, Excel เป็น PDF, ลดขนาด PDF, รวม PDF ใช้งานง่าย ปลอดภัย 100%">
+    <meta name="keywords" content="แปลงไฟล์, JPG เป็น PDF, Word เป็น PDF, แปลงไฟล์ออนไลน์, PDF Converter, ฟรี">
+    
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1797172064583364" crossorigin="anonymous"></script>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-1797172064583364",
+            enable_page_level_ads: true
+        });
+    </script>
+    
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-XXXXXXXXXX');
+    </script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Prompt', sans-serif;
+            background: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
+            background: #fff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: #dc3545;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .logo i {
+            background: linear-gradient(135deg, #dc3545, #ff6b35);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav a {
+            color: #666;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav a:hover {
+            color: #dc3545;
+        }
+
+        /* Main Content */
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            color: #333;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: #666;
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Upload Section */
+        .upload-section {
+            background: #fff;
+            border-radius: 20px;
+            padding: 60px 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 60px;
+            text-align: center;
+            border: 3px dashed #e9ecef;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .upload-section:hover {
+            border-color: #dc3545;
+            box-shadow: 0 15px 40px rgba(220, 53, 69, 0.1);
+        }
+
+        .upload-section.dragover {
+            border-color: #dc3545;
+            background: rgba(220, 53, 69, 0.02);
+            transform: scale(1.02);
+        }
+
+        .upload-icon {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #dc3545, #ff6b35);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px;
+        }
+
+        .upload-icon i {
+            font-size: 2.5rem;
+            color: #fff;
+        }
+
+        .upload-text h2 {
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .upload-text p {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .upload-btn {
+            background: linear-gradient(135deg, #dc3545, #ff6b35);
+            color: #fff;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(220, 53, 69, 0.3);
+        }
+
+        .upload-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(220, 53, 69, 0.4);
+        }
+
+        .file-types {
+            margin-top: 20px;
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            display: none;
+            margin-top: 30px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: #e9ecef;
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #dc3545, #ff6b35);
+            width: 0%;
+            transition: width 0.3s ease;
+            border-radius: 3px;
+        }
+
+        .progress-text {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Ad Containers */
+        .ad-top {
+            background: #fff;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 40px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+
+        .ad-middle {
+            background: #fff;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 40px 0;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+
+        .ad-bottom {
+            background: #fff;
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 40px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+
+        .ad-label {
+            font-size: 0.8rem;
+            color: #999;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .ad-container ins.adsbygoogle {
+            border: none !important;
+            background: transparent !important;
+            display: block;
+        }
+
+        /* Tools Grid */
+        .tools-section {
+            margin-top: 80px;
+        }
+
+        .tools-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 50px;
+            font-weight: 700;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .tool-card {
+            background: #fff;
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            border-color: #dc3545;
+        }
+
+        .tool-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #dc3545, #ff6b35);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+
+        .tool-icon i {
+            font-size: 2rem;
+            color: #fff;
+        }
+
+        .tool-card h3 {
+            font-size: 1.4rem;
+            color: #333;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .tool-card p {
+            color: #666;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        /* Features Section */
+        .features {
+            background: #fff;
+            border-radius: 20px;
+            padding: 60px 40px;
+            margin: 60px 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+
+        .features-title {
+            text-align: center;
+            font-size: 2.2rem;
+            color: #333;
+            margin-bottom: 40px;
+            font-weight: 700;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+        }
+
+        .feature-item {
+            text-align: center;
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(220, 53, 69, 0.1);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+        }
+
+        .feature-icon i {
+            font-size: 1.5rem;
+            color: #dc3545;
+        }
+
+        .feature-item h4 {
+            font-size: 1.2rem;
+            color: #333;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .feature-item p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: #333;
+            color: #fff;
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 80px;
+        }
+
+        .footer p {
+            margin-bottom: 10px;
+        }
+
+        .footer a {
+            color: #ff6b35;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-container {
+                padding: 0 15px;
+                height: 60px;
+            }
+
+            .nav {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .upload-section {
+                padding: 40px 20px;
+                margin-bottom: 40px;
+            }
+
+            .upload-text h2 {
+                font-size: 1.6rem;
+            }
+
+            .tools-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .tool-card {
+                padding: 30px 20px;
+            }
+
+            .main-container {
+                padding: 20px 15px;
+            }
+
+            .features {
+                padding: 40px 20px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+
+        /* Loading Animation */
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #dc3545;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+            display: none;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Success Message */
+        .success-message {
+            display: none;
+            background: #d4edda;
+            color: #155724;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            border: 1px solid #c3e6cb;
+        }
+
+        .error-message {
+            display: none;
+            background: #f8d7da;
+            color: #721c24;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <a href="#" class="logo">
+                <i class="fas fa-file-pdf"></i>
+                แปลงไฟล์ฟรี
+            </a>
+            <nav>
+                <ul class="nav">
+                    <li><a href="#tools">เครื่องมือ</a></li>
+                    <li><a href="privacy.html">ความเป็นส่วนตัว</a></li>
+                    <li><a href="#contact">ติดต่อ</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <!-- Top Ad -->
+        <div class="ad-top">
+            <div class="ad-label">โฆษณา</div>
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-1797172064583364"
+                 data-ad-slot="1234567890"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1>แปลงไฟล์ออนไลน์ฟรี</h1>
+            <p>แปลงรูปภาพ JPG เป็น PDF, Word เป็น PDF และไฟล์อื่นๆ ในชั่ววินาที<br>
+               ใช้งานง่าย ปลอดภัย และไม่ต้องติดตั้งโปรแกรม</p>
+        </section>
+
+        <!-- Upload Section -->
+        <section class="upload-section" onclick="triggerFileInput()" ondrop="handleDrop(event)" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)">
+            <div class="upload-icon">
+                <i class="fas fa-cloud-upload-alt"></i>
+            </div>
+            <div class="upload-text">
+                <h2>เลือกไฟล์ที่ต้องการแปลง</h2>
+                <p>คลิกเพื่อเลือกไฟล์ หรือลากไฟล์มาวางที่นี่</p>
+                <button class="upload-btn">
+                    <i class="fas fa-plus" style="margin-right: 8px;"></i>
+                    เลือกไฟล์
+                </button>
+                <div class="file-types">
+                    รองรับไฟล์: JPG, PNG, GIF, TXT, PDF
+                </div>
+            </div>
+            
+            <input type="file" id="fileInput" class="file-input" accept="image/*,.txt,.pdf" onchange="handleFileSelect(event)">
+            
+            <div class="progress-container" id="progressContainer">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="progress-text" id="progressText">กำลังแปลงไฟล์...</div>
+            </div>
+            
+            <div class="spinner" id="spinner"></div>
+            <div class="success-message" id="successMessage">
+                <i class="fas fa-check-circle" style="margin-right: 8px;"></i>
+                แปลงไฟล์สำเร็จ! ไฟล์ได้ถูกดาวน์โหลดแล้ว
+            </div>
+            <div class="error-message" id="errorMessage"></div>
+        </section>
+
+        <!-- Middle Ad -->
+        <div class="ad-middle">
+            <div class="ad-label">สนับสนุนโดย</div>
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-1797172064583364"
+                 data-ad-slot="9876543210"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
+
+        <!-- Tools Section -->
+        <section class="tools-section" id="tools">
+            <h2 class="tools-title">เครื่องมือแปลงไฟล์</h2>
+            <div class="tools-grid">
+                <div class="tool-card" onclick="setConversionType('image-to-pdf')">
+                    <div class="tool-icon">
+                        <i class="fas fa-images"></i>
+                    </div>
+                    <h3>รูปภาพ เป็น PDF</h3>
+                    <p>แปลงไฟล์ JPG, PNG, GIF เป็น PDF คุณภาพสูง</p>
+                </div>
+
+                <div class="tool-card" onclick="setConversionType('text-to-pdf')">
+                    <div class="tool-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <h3>ข้อความ เป็น PDF</h3>
+                    <p>แปลงไฟล์ TXT เป็น PDF พร้อมจัดรูปแบบ</p>
+                </div>
+
+                <div class="tool-card" onclick="showComingSoon()">
+                    <div class="tool-icon">
+                        <i class="fas fa-file-word"></i>
+                    </div>
+                    <h3>Word เป็น PDF</h3>
+                    <p>แปลง Microsoft Word เป็น PDF</p>
+                    <small style="color: #ff6b35; font-weight: 600;">เร็วๆ นี้</small>
+                </div>
+
+                <div class="tool-card" onclick="showComingSoon()">
+                    <div class="tool-icon">
+                        <i class="fas fa-file-excel"></i>
+                    </div>
+                    <h3>Excel เป็น PDF</h3>
+                    <p>แปลง Microsoft Excel เป็น PDF</p>
+                    <small style="color: #ff6b35; font-weight: 600;">เร็วๆ นี้</small>
+                </div>
+
+                <div class="tool-card" onclick="setConversionType('compress-pdf')">
+                    <div class="tool-icon">
+                        <i class="fas fa-compress-alt"></i>
+                    </div>
+                    <h3>ลดขนาด PDF</h3>
+                    <p>ลดขนาดไฟล์ PDF โดยคงคุณภาพ</p>
+                </div>
+
+                <div class="tool-card" onclick="setConversionType('merge-pdf')">
+                    <div class="tool-icon">
+                        <i class="fas fa-object-group"></i>
+                    </div>
+                    <h3>รวม PDF</h3>
+                    <p>รวมไฟล์ PDF หลายไฟล์เป็นไฟล์เดียว</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features">
+            <h2 class="features-title">ทำไมต้องเลือกเรา?</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <h4>ปลอดภัย 100%</h4>
+                    <p>ไฟล์จะถูกลบอัตโนมัติภายใน 30 นาที</p>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h4>รวดเร็ว</h4>
+                    <p>แปลงไฟล์ได้ในชั่ววินาที</p>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-gift"></i>
+                    </div>
+                    <h4>ฟรี 100%</h4>
+                    <p>ใช้งานได้ไม่จำกัด ไม่ต้องสมัครสมาชิก</p>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h4>ใช้งานทุกอุปกรณ์</h4>
+                    <p>รองรับมือถือ แท็บเล็ต และคอมพิวเตอร์</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Ad -->
+        <div class="ad-bottom">
+            <div class="ad-label">โฆษณา</div>
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-1797172064583364"
+                 data-ad-slot="5555555555"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2025 เครื่องมือแปลงไฟล์ออนไลน์ | Made with ❤️ by TimetrackerUD01</p>
+        <p>
+            <a href="privacy.html">นโยบายความเป็นส่วนตัว</a> | 
+            <a href="mailto:timetrackerud01@gmail.com">ติดต่อเรา</a>
+        </p>
+    </footer>
+
+    <script>
+        let currentConversionType = 'image-to-pdf';
+
+        function setConversionType(type) {
+            currentConversionType = type;
+            const fileInput = document.getElementById('fileInput');
+            
+            // Update file input accept attribute
+            switch(type) {
+                case 'image-to-pdf':
+                    fileInput.accept = 'image/*';
+                    break;
+                case 'text-to-pdf':
+                    fileInput.accept = '.txt';
+                    break;
+                case 'compress-pdf':
+                case 'merge-pdf':
+                    fileInput.accept = '.pdf';
+                    fileInput.multiple = (type === 'merge-pdf');
+                    break;
+            }
+            
+            // Scroll to upload section
+            document.querySelector('.upload-section').scrollIntoView({ 
+                behavior: 'smooth' 
+            });
+        }
+
+        function triggerFileInput() {
+            document.getElementById('fileInput').click();
+        }
+
+        function handleDragOver(event) {
+            event.preventDefault();
+            event.currentTarget.classList.add('dragover');
+        }
+
+        function handleDragLeave(event) {
+            event.currentTarget.classList.remove('dragover');
+        }
+
+        function handleDrop(event) {
+            event.preventDefault();
+            event.currentTarget.classList.remove('dragover');
+            const files = event.dataTransfer.files;
+            if (files.length > 0) {
+                processFiles(files);
+            }
+        }
+
+        function handleFileSelect(event) {
+            const files = event.target.files;
+            if (files.length > 0) {
+                processFiles(files);
+            }
+        }
+
+        async function processFiles(files) {
+            const progressContainer = document.getElementById('progressContainer');
+            const progressFill = document.getElementById('progressFill');
+            const progressText = document.getElementById('progressText');
+            const spinner = document.getElementById('spinner');
+            const successMessage = document.getElementById('successMessage');
+            const errorMessage = document.getElementById('errorMessage');
+
+            // Reset UI
+            progressContainer.style.display = 'block';
+            spinner.style.display = 'block';
+            successMessage.style.display = 'none';
+            errorMessage.style.display = 'none';
+            progressFill.style.width = '0%';
+
+            try {
+                const formData = new FormData();
+                
+                if (currentConversionType === 'merge-pdf' && files.length > 1) {
+                    for (let i = 0; i < files.length; i++) {
+                        formData.append('files', files[i]);
+                    }
+                    progressText.textContent = `กำลังรวม ${files.length} ไฟล์...`;
+                } else {
+                    formData.append('file', files[0]);
+                    progressText.textContent = `กำลังแปลงไฟล์ ${files[0].name}...`;
+                }
+
+                let endpoint = '';
+                switch(currentConversionType) {
+                    case 'image-to-pdf':
+                        endpoint = '/api/convert/image-to-pdf';
+                        break;
+                    case 'text-to-pdf':
+                        endpoint = '/api/convert/text-to-pdf';
+                        break;
+                    case 'compress-pdf':
+                        endpoint = '/api/compress-pdf';
+                        break;
+                    case 'merge-pdf':
+                        endpoint = '/api/merge-pdf';
+                        break;
+                }
+
+                // Simulate progress
+                let progress = 0;
+                const progressInterval = setInterval(() => {
+                    progress += Math.random() * 20;
+                    if (progress > 90) progress = 90;
+                    progressFill.style.width = progress + '%';
+                }, 200);
+
+                const response = await fetch(endpoint, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                clearInterval(progressInterval);
+                progressFill.style.width = '100%';
+
+                if (response.ok) {
+                    const blob = await response.blob();
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.style.display = 'none';
+                    a.href = url;
+                    a.download = 'converted-file.pdf';
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                    document.body.removeChild(a);
+                    
+                    successMessage.style.display = 'block';
+                    progressText.textContent = 'แปลงเสร็จสิ้น!';
+
+                    // Track conversion
+                    if (typeof gtag !== 'undefined') {
+                        gtag('event', 'file_conversion', {
+                            'service_type': currentConversionType,
+                            'event_category': 'conversion'
+                        });
+                    }
+                } else {
+                    const error = await response.text();
+                    throw new Error(error || 'เกิดข้อผิดพลาดในการแปลงไฟล์');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                errorMessage.textContent = error.message;
+                errorMessage.style.display = 'block';
+                progressText.textContent = 'เกิดข้อผิดพลาด';
+            } finally {
+                spinner.style.display = 'none';
+                setTimeout(() => {
+                    progressContainer.style.display = 'none';
+                    successMessage.style.display = 'none';
+                    errorMessage.style.display = 'none';
+                    progressFill.style.width = '0%';
+                    document.getElementById('fileInput').value = '';
+                }, 3000);
+            }
+        }
+
+        function showComingSoon() {
+            alert('ฟีเจอร์นี้จะเปิดให้บริการเร็วๆ นี้ กรุณารอติดตาม! 🚀');
+        }
+
+        // Initialize AdSense ads
+        (adsbygoogle = window.adsbygoogle || []).push({});
+        (adsbygoogle = window.adsbygoogle || []).push({});
+        (adsbygoogle = window.adsbygoogle || []).push({});
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
