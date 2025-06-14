@@ -1,18 +1,25 @@
 User-agent: *
 Allow: /
 
-# Sitemap
-Sitemap: https://pdf-to-word.vercel.app/sitemap.xml
+# Sitemap สำหรับ Google Search
+Sitemap: https://pdf-to-word-one.vercel.app/sitemap.xml
 
-# Disallow sensitive areas
-Disallow: /uploads/
-Disallow: /output/
-Disallow: /api/
-Disallow: /*.json$
-Disallow: /*.md$
-
-# Allow specific files
+# อนุญาตให้ index หน้าสำคัญ
 Allow: /index.html
 Allow: /style.css
 Allow: /script.js
 Allow: /sitemap.xml
+Allow: /manifest.json
+
+# ห้าม index ไฟล์ที่ไม่จำเป็น
+Disallow: /uploads/
+Disallow: /output/
+Disallow: /api/
+Disallow: /node_modules/
+Disallow: /*.json$
+Disallow: /*.md$
+Disallow: /.git/
+
+# SEO Keywords สำหรับ Google
+# แปลงไฟล์ออนไลน์ Word เป็น PDF Excel เป็น PDF PowerPoint เป็น PDF
+# ลดขนาด PDF รวม PDF แยก PDF ฟรี ปลอดภัย ภาษาไทย

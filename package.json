@@ -19,30 +19,33 @@
     "nodejs",
     "web-app",
     "document-converter"
-  ],
-  "author": {
-    "name": "PDF Converter Team",
-    "email": "support@pdfconverter.com"
+  ],  "author": {
+    "name": "TimetrackerUD01",
+    "email": "timetrackerud01@gmail.com"
   },
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/your-username/pdf-converter-web.git"
+    "url": "https://pdf-to-word-one.vercel.app"
   },
   "bugs": {
-    "url": "https://github.com/your-username/pdf-converter-web/issues"
+    "url": "https://pdf-to-word-one.vercel.app/support"
   },
-  "homepage": "https://github.com/your-username/pdf-converter-web#readme",
+  "homepage": "https://pdf-to-word-one.vercel.app",
   "engines": {
     "node": ">=14.0.0",
     "npm": ">=6.0.0"
-  },
-  "dependencies": {
+  },  "dependencies": {
     "express": "^4.19.0",
     "multer": "^1.4.4",
     "cors": "^2.8.5",
     "fs-extra": "^11.2.0",
-    "pdf-lib": "^1.17.1"
+    "pdf-lib": "^1.17.1",
+    "libreoffice-convert": "^1.6.0",
+    "pdf2pic": "^2.1.4",
+    "sharp": "^0.32.6",
+    "mammoth": "^1.6.0",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "nodemon": "^3.0.0"
