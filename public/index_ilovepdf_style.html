@@ -792,15 +792,13 @@
                 } else {
                     formData.append('file', files[0]);
                     progressText.textContent = `กำลังแปลงไฟล์ ${files[0].name}...`;
-                }
-
-                let endpoint = '';
+                }                let endpoint = '';
                 switch(currentConversionType) {
                     case 'image-to-pdf':
-                        endpoint = '/api/convert/image-to-pdf';
+                        endpoint = '/api/image-to-pdf';
                         break;
                     case 'text-to-pdf':
-                        endpoint = '/api/convert/text-to-pdf';
+                        endpoint = '/api/text-to-pdf';
                         break;
                     case 'compress-pdf':
                         endpoint = '/api/compress-pdf';

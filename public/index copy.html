@@ -1102,7 +1102,7 @@
             });
         }
 
-        function handleFileUpload(file, type) {
+        async function handleFileUpload(file, type) {
             const uploadArea = document.getElementById('uploadArea');
             const progressArea = document.getElementById('progressArea');
             const resultArea = document.getElementById('resultArea');
@@ -1138,28 +1138,56 @@
                 
                 if (progress >= 90) {
                     clearInterval(progressInterval);
-                }
-            }, 500);
+                }            }, 500);
             
-            // Simulate API call (แทนที่ด้วย API จริงในภายหลัง)
-            setTimeout(() => {
+            // เรียก API จริง
+            try {
+                const response = await fetch(endpoint, {
+                    method: 'POST',
+                    body: formData
+                });
+                
                 clearInterval(progressInterval);
                 progressFill.style.width = '100%';
-                progressText.textContent = 'เสร็จสิ้น!';
+                
+                if (response.ok) {
+                    const blob = await response.blob();
+                    progressText.textContent = 'เสร็จสิ้น!';
+                    
+                    setTimeout(() => {
+                        // แสดงผลลัพธ์
+                        progressArea.style.display = 'none';
+                        resultArea.style.display = 'block';
+                        
+                        // สร้างลิงค์ดาวน์โหลดจริง
+                        const downloadBtn = document.getElementById('downloadBtn');
+                        downloadBtn.onclick = () => {
+                            const url = window.URL.createObjectURL(blob);
+                            const a = document.createElement('a');
+                            a.style.display = 'none';
+                            a.href = url;
+                            a.download = getOutputFileName(file.name, type);
+                            document.body.appendChild(a);
+                            a.click();
+                            window.URL.revokeObjectURL(url);
+                            document.body.removeChild(a);
+                            closeModal();
+                        };
+                    }, 1000);
+                } else {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error || 'เกิดข้อผิดพลาดในการแปลงไฟล์');
+                }
+            } catch (error) {
+                clearInterval(progressInterval);
+                progressFill.style.width = '0%';
+                progressText.textContent = 'เกิดข้อผิดพลาด: ' + error.message;
                 
                 setTimeout(() => {
-                    // แสดงผลลัพธ์
                     progressArea.style.display = 'none';
-                    resultArea.style.display = 'block';
-                    
-                    // สร้างลิงค์ดาวน์โหลดจำลอง
-                    const downloadBtn = document.getElementById('downloadBtn');
-                    downloadBtn.onclick = () => {
-                        alert(`📁 กำลังดาวน์โหลด: ${getOutputFileName(file.name, type)}\n\n💡 ในเว็บไซต์จริง ไฟล์จะถูกดาวน์โหลดอัตโนมัติ\n\n📧 ติดต่อเรา: timetrackerud01@gmail.com`);
-                        closeModal();
-                    };
-                }, 1000);
-            }, 3000);
+                    uploadArea.style.display = 'block';
+                }, 2000);
+            }
         }
 
         function closeModal() {

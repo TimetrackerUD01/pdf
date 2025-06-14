@@ -1064,15 +1064,13 @@
                     }
                 } else {
                     formData.append('file', files[0]);
-                }
-
-                let endpoint = '';
+                }                let endpoint = '';
                 switch(currentService) {
                     case 'image-to-pdf':
-                        endpoint = '/api/convert/image-to-pdf';
+                        endpoint = '/api/image-to-pdf';
                         break;
                     case 'text-to-pdf':
-                        endpoint = '/api/convert/text-to-pdf';
+                        endpoint = '/api/text-to-pdf';
                         break;
                     case 'compress-pdf':
                         endpoint = '/api/compress-pdf';
