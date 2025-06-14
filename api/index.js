@@ -5,8 +5,14 @@ const cors = require('cors');
 const { PDFDocument } = require('pdf-lib');
 const sharp = require('sharp');
 
+// Import keep-alive service for free tier optimization
+const { keepAlive } = require('../utils/keepAlive');
+
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+// Start keep-alive service
+keepAlive();
 
 // Middleware
 app.use(cors());
