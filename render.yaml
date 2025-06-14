@@ -1,0 +1,18 @@
+# Render deployment configuration
+# FREE forever with limitations but suitable for this project
+
+version: 2
+services:
+  - type: web
+    name: pdf-converter
+    env: node
+    repo: https://github.com/TimetrackerUD01/pdf.git
+    buildCommand: npm install
+    startCommand: node api/index.js
+    plan: free
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+    healthCheckPath: /api/health
