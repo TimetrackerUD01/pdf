@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>แปลงไฟล์ออนไลน์ - Word to PDF & PDF Tools</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <i class="fas fa-file-pdf"></i>
+                <h1>PDF Converter</h1>
+            </div>
+            <nav class="nav">
+                <a href="#home">หน้าแรก</a>
+                <a href="#services">บริการ</a>
+                <a href="#about">เกี่ยวกับเรา</a>
+            </nav>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="hero" id="home">
+            <div class="hero-content">
+                <h2>แปลงไฟล์ออนไลน์ได้ง่ายๆ</h2>
+                <p>แปลงไฟล์ Word เป็น PDF, ลดขนาดไฟล์ PDF และเครื่องมืออื่นๆ อีกมากมาย</p>
+                <div class="hero-buttons">
+                    <button class="btn-primary" onclick="scrollToServices()">
+                        <i class="fas fa-arrow-down"></i>
+                        เริ่มใช้งาน
+                    </button>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="floating-elements">
+                    <div class="floating-card">
+                        <i class="fas fa-file-word"></i>
+                        <span>Word</span>
+                    </div>
+                    <div class="floating-arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                    <div class="floating-card">
+                        <i class="fas fa-file-pdf"></i>
+                        <span>PDF</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section class="services" id="services">
+            <div class="section-header">
+                <h2>บริการของเรา</h2>
+                <p>เครื่องมือครบครันสำหรับการจัดการไฟล์ PDF</p>
+            </div>
+            
+            <div class="services-grid">
+                <!-- Word to PDF -->
+                <div class="service-card" onclick="openConverter('word-to-pdf')">
+                    <div class="service-icon">
+                        <i class="fas fa-file-word"></i>
+                    </div>
+                    <h3>Word เป็น PDF</h3>
+                    <p>แปลงไฟล์ Word เป็น PDF คุณภาพสูง</p>
+                    <div class="service-arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </div>
+
+                <!-- PDF Compress -->
+                <div class="service-card" onclick="openConverter('pdf-compress')">
+                    <div class="service-icon">
+                        <i class="fas fa-compress-alt"></i>
+                    </div>
+                    <h3>ลดขนาด PDF</h3>
+                    <p>ลดขนาดไฟล์ PDF โดยไม่สูญเสียคุณภาพ</p>
+                    <div class="service-arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </div>
+
+                <!-- PDF Merge -->
+                <div class="service-card" onclick="openConverter('pdf-merge')">
+                    <div class="service-icon">
+                        <i class="fas fa-object-group"></i>
+                    </div>
+                    <h3>รวม PDF</h3>
+                    <p>รวมไฟล์ PDF หลายไฟล์เป็นไฟล์เดียว</p>
+                    <div class="service-arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </div>
+
+                <!-- PDF Split -->
+                <div class="service-card" onclick="openConverter('pdf-split')">
+                    <div class="service-icon">
+                        <i class="fas fa-cut"></i>
+                    </div>
+                    <h3>แยก PDF</h3>
+                    <p>แยกไฟล์ PDF เป็นไฟล์ย่อยๆ</p>
+                    <div class="service-arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </div>
+
+                <!-- Excel to PDF -->
+                <div class="service-card" onclick="openConverter('excel-to-pdf')">
+                    <div class="service-icon">
+                        <i class="fas fa-file-excel"></i>
+                    </div>
+                    <h3>Excel เป็น PDF</h3>
+                    <p>แปลงไฟล์ Excel เป็น PDF</p>
+                    <div class="service-arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </div>
+
+                <!-- PowerPoint to PDF -->
+                <div class="service-card" onclick="openConverter('ppt-to-pdf')">
+                    <div class="service-icon">
+                        <i class="fas fa-file-powerpoint"></i>
+                    </div>
+                    <h3>PowerPoint เป็น PDF</h3>
+                    <p>แปลงไฟล์ PowerPoint เป็น PDF</p>
+                    <div class="service-arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Converter Modal -->
+        <div class="modal" id="converterModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="modalTitle">แปลงไฟล์</h3>
+                    <button class="close-btn" onclick="closeConverter()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="upload-area" id="uploadArea">
+                        <div class="upload-icon">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                        </div>
+                        <h4>ลากไฟล์มาวางที่นี่</h4>
+                        <p>หรือ <span class="upload-link" onclick="triggerFileInput()">คลิกเพื่อเลือกไฟล์</span></p>
+                        <input type="file" id="fileInput" accept=".docx,.doc,.pdf,.xlsx,.xls,.pptx,.ppt" style="display: none;">
+                        <div class="supported-formats">
+                            <small>รองรับ: DOCX, DOC, PDF, XLSX, XLS, PPTX, PPT</small>
+                        </div>
+                    </div>
+                    
+                    <div class="file-preview" id="filePreview" style="display: none;">
+                        <div class="file-info">
+                            <div class="file-icon">
+                                <i class="fas fa-file"></i>
+                            </div>
+                            <div class="file-details">
+                                <span class="file-name" id="fileName"></span>
+                                <span class="file-size" id="fileSize"></span>
+                            </div>
+                            <button class="remove-file" onclick="removeFile()">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                        <div class="progress-bar" id="progressBar" style="display: none;">
+                            <div class="progress-fill" id="progressFill"></div>
+                        </div>
+                        <div class="convert-actions">
+                            <button class="btn-secondary" onclick="removeFile()">ยกเลิก</button>
+                            <button class="btn-primary" onclick="startConversion()" id="convertBtn">
+                                <i class="fas fa-sync-alt"></i>
+                                เริ่มแปลง
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Features Section -->
+        <section class="features">
+            <div class="section-header">
+                <h2>ทำไมต้องเลือกเรา?</h2>
+            </div>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h4>รวดเร็ว</h4>
+                    <p>แปลงไฟล์ได้ภายในไม่กี่วินาที</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h4>ปลอดภัย</h4>
+                    <p>ไฟล์ของคุณจะถูกลบอัตโนมัติหลังจากแปลงเสร็จ</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h4>คุณภาพสูง</h4>
+                    <p>รักษาคุณภาพของไฟล์ต้นฉบับ</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h4>ใช้งานง่าย</h4>
+                    <p>ใช้งานได้ทั้งบนมือถือและคอมพิวเตอร์</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>PDF Converter</h4>
+                    <p>เครื่องมือแปลงไฟล์ออนไลน์ที่ดีที่สุด</p>
+                </div>
+                <div class="footer-section">
+                    <h4>บริการ</h4>
+                    <ul>
+                        <li><a href="#">Word เป็น PDF</a></li>
+                        <li><a href="#">ลดขนาด PDF</a></li>
+                        <li><a href="#">รวม PDF</a></li>
+                        <li><a href="#">แยก PDF</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>ติดต่อเรา</h4>
+                    <ul>
+                        <li><i class="fas fa-envelope"></i> support@pdfconverter.com</li>
+                        <li><i class="fas fa-phone"></i> 02-123-4567</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 PDF Converter. สงวนลิขสิทธิ์.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
