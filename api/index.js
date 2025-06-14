@@ -13,11 +13,11 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '../public')));
 
-// กำหนดการอัปโหลดไฟล์ (ใช้ memory storage สำหรับ Vercel)
+// กำหนดการอัปโหลดไฟล์ (memory storage สำหรับ Koyeb)
 const storage = multer.memoryStorage();
 const upload = multer({ 
     storage: storage,
-    limits: { fileSize: 10 * 1024 * 1024 }, // จำกัด 10MB สำหรับ Vercel
+    limits: { fileSize: 50 * 1024 * 1024 }, // เพิ่มเป็น 50MB สำหรับ Koyeb
     fileFilter: (req, file, cb) => {
         const allowedTypes = [
             'application/pdf',
@@ -28,12 +28,16 @@ const upload = multer({
         ];
         
         if (allowedTypes.includes(file.mimetype)) {
-            cb(null, true);
-        } else {
+            cb(null, true);        } else {
             cb(new Error('ประเภทไฟล์ไม่รองรับ (รองรับเฉพาะ PDF, รูปภาพ, และ Text)'), false);
         }
     }
 });
+
+console.log('🚀 Starting PDF Converter API for Koyeb deployment');
+console.log(`📦 Environment: ${process.env.NODE_ENV || 'development'}`);
+console.log(`🔧 File size limit: 50MB`);
+console.log(`⚡ No timeout restrictions on Koyeb`);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
@@ -207,11 +211,10 @@ app.post('/api/compress-pdf', upload.single('file'), async (req, res) => {
         let errorMessage = 'เกิดข้อผิดพลาดในการลดขนาดไฟล์';
         
         if (error.message.includes('No PDF header found')) {
-            errorMessage = 'ไฟล์ที่อัปโหลดไม่ใช่ PDF ที่ถูกต้อง กรุณาตรวจสอบไฟล์และลองใหม่';
-        } else if (error.message.includes('Failed to parse PDF')) {
+            errorMessage = 'ไฟล์ที่อัปโหลดไม่ใช่ PDF ที่ถูกต้อง กรุณาตรวจสอบไฟล์และลองใหม่';        } else if (error.message.includes('Failed to parse PDF')) {
             errorMessage = 'ไฟล์ PDF เสียหายหรือมีรูปแบบที่ไม่รองรับ กรุณาลองใช้ไฟล์ PDF อื่น';
         } else if (error.message.includes('LIMIT_FILE_SIZE')) {
-            errorMessage = 'ไฟล์มีขนาดใหญ่เกินไป (จำกัด 10MB สำหรับ Vercel)';
+            errorMessage = 'ไฟล์มีขนาดใหญ่เกินไป (จำกัด 50MB สำหรับ Koyeb)';
         }
         
         res.status(500).json({ 
@@ -288,11 +291,10 @@ app.post('/api/merge-pdf', upload.array('files', 10), async (req, res) => {
         let errorMessage = 'เกิดข้อผิดพลาดในการรวมไฟล์';
         
         if (error.message.includes('No PDF header found')) {
-            errorMessage = 'มีไฟล์ที่ไม่ใช่ PDF ที่ถูกต้อง กรุณาตรวจสอบไฟล์ทั้งหมดและลองใหม่';
-        } else if (error.message.includes('Failed to parse PDF')) {
+            errorMessage = 'มีไฟล์ที่ไม่ใช่ PDF ที่ถูกต้อง กรุณาตรวจสอบไฟล์ทั้งหมดและลองใหม่';        } else if (error.message.includes('Failed to parse PDF')) {
             errorMessage = 'มีไฟล์ PDF เสียหายหรือมีรูปแบบที่ไม่รองรับ กรุณาลองใช้ไฟล์ PDF อื่น';
         } else if (error.message.includes('LIMIT_FILE_SIZE')) {
-            errorMessage = 'ไฟล์มีขนาดใหญ่เกินไป (จำกัด 10MB สำหรับ Vercel)';
+            errorMessage = 'ไฟล์มีขนาดใหญ่เกินไป (จำกัด 50MB สำหรับ Koyeb)';
         }
         
         res.status(500).json({ 
@@ -325,7 +327,7 @@ app.get('/api/health', (req, res) => {
 app.use((error, req, res, next) => {
     if (error instanceof multer.MulterError) {
         if (error.code === 'LIMIT_FILE_SIZE') {
-            return res.status(400).json({ error: 'ไฟล์มีขนาดใหญ่เกินไป (จำกัด 10MB สำหรับ Vercel)' });
+            return res.status(400).json({ error: 'ไฟล์มีขนาดใหญ่เกินไป (จำกัด 50MB สำหรับ Koyeb)' });
         }
     }
     
@@ -333,18 +335,21 @@ app.use((error, req, res, next) => {
     res.status(500).json({ error: 'เกิดข้อผิดพลาดภายในเซิร์ฟเวอร์' });
 });
 
-// Export สำหรับ Vercel
+// Export สำหรับใช้เป็น module
 module.exports = app;
 
-// สำหรับรัน local
+// สำหรับรัน local และ Koyeb
 if (require.main === module) {
-    app.listen(PORT, () => {
-        console.log(`🚀 เซิร์ฟเวอร์ Vercel-ready กำลังทำงานบนพอร์ต ${PORT}`);
-        console.log(`📱 เปิดเบราว์เซอร์และไปที่: http://localhost:${PORT}`);
-        console.log(`🔥 ฟีเจอร์ที่รองรับบน Vercel:`);
-        console.log(`   - รูปภาพเป็น PDF`);
-        console.log(`   - Text เป็น PDF`);
-        console.log(`   - ลดขนาด PDF`);
-        console.log(`   - รวม PDF`);
+    app.listen(PORT, '0.0.0.0', () => {
+        console.log(`🚀 PDF Converter API เริ่มทำงานบนพอร์ต ${PORT}`);
+        console.log(`📱 เข้าถึงได้ที่: http://localhost:${PORT}`);
+        console.log(`☁️  Platform: Koyeb - No limitations!`);
+        console.log(`🔥 ฟีเจอร์ที่รองรับบน Koyeb:`);
+        console.log(`   - 🖼️  รูปภาพเป็น PDF (up to 50MB)`);
+        console.log(`   - 📝 Text เป็น PDF`);
+        console.log(`   - 🗜️  ลดขนาด PDF`);
+        console.log(`   - 📋 รวม PDF (หลายไฟล์)`);
+        console.log(`   - ⏱️  ไม่มีข้อจำกัดเรื่องเวลา`);
+        console.log(`   - 🔄 Persistent containers`);
     });
 }
