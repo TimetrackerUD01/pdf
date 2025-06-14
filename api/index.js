@@ -155,8 +155,32 @@ app.post('/api/compress-pdf', upload.single('file'), async (req, res) => {
             return res.status(400).json({ error: 'กรุณาเลือกไฟล์ PDF' });
         }
 
+        // ตรวจสอบ MIME type
+        if (req.file.mimetype !== 'application/pdf') {
+            return res.status(400).json({ 
+                error: 'ไฟล์ที่อัปโหลดไม่ใช่ PDF (รองรับเฉพาะไฟล์ .pdf เท่านั้น)' 
+            });
+        }
+
         const pdfBuffer = req.file.buffer;
         const originalName = req.file.originalname;
+        
+        // ตรวจสอบ PDF header
+        const pdfHeader = pdfBuffer.slice(0, 5).toString();
+        if (!pdfHeader.startsWith('%PDF')) {
+            return res.status(400).json({ 
+                error: 'ไฟล์ที่อัปโหลดไม่ใช่ PDF ที่ถูกต้อง (ไม่พบ PDF header)' 
+            });
+        }
+
+        // ตรวจสอบขนาดไฟล์
+        if (pdfBuffer.length === 0) {
+            return res.status(400).json({ 
+                error: 'ไฟล์ที่อัปโหลดว่างเปล่า' 
+            });
+        }
+
+        console.log(`กำลังบีบอัด PDF: ${originalName} (${(pdfBuffer.length / 1024 / 1024).toFixed(2)} MB)`);
         
         // อ่านไฟล์ PDF
         const pdfDoc = await PDFDocument.load(pdfBuffer);
@@ -168,6 +192,9 @@ app.post('/api/compress-pdf', upload.single('file'), async (req, res) => {
         });
         
         const compressedName = originalName.replace('.pdf', '_compressed.pdf');
+        const compressionRatio = ((1 - compressedPdfBytes.length / pdfBuffer.length) * 100).toFixed(1);
+        
+        console.log(`บีบอัดสำเร็จ: ${compressionRatio}% reduction`);
         
         res.setHeader('Content-Type', 'application/pdf');
         res.setHeader('Content-Disposition', `attachment; filename="${encodeURIComponent(compressedName)}"`);
@@ -175,8 +202,20 @@ app.post('/api/compress-pdf', upload.single('file'), async (req, res) => {
 
     } catch (error) {
         console.error('Compression error:', error);
+        
+        // ส่ง error message ที่เข้าใจง่าย
+        let errorMessage = 'เกิดข้อผิดพลาดในการลดขนาดไฟล์';
+        
+        if (error.message.includes('No PDF header found')) {
+            errorMessage = 'ไฟล์ที่อัปโหลดไม่ใช่ PDF ที่ถูกต้อง กรุณาตรวจสอบไฟล์และลองใหม่';
+        } else if (error.message.includes('Failed to parse PDF')) {
+            errorMessage = 'ไฟล์ PDF เสียหายหรือมีรูปแบบที่ไม่รองรับ กรุณาลองใช้ไฟล์ PDF อื่น';
+        } else if (error.message.includes('LIMIT_FILE_SIZE')) {
+            errorMessage = 'ไฟล์มีขนาดใหญ่เกินไป (จำกัด 10MB สำหรับ Vercel)';
+        }
+        
         res.status(500).json({ 
-            error: 'เกิดข้อผิดพลาดในการลดขนาดไฟล์: ' + error.message 
+            error: errorMessage
         });
     }
 });
@@ -188,16 +227,55 @@ app.post('/api/merge-pdf', upload.array('files', 10), async (req, res) => {
             return res.status(400).json({ error: 'กรุณาเลือกไฟล์ PDF อย่างน้อย 2 ไฟล์' });
         }
 
+        // ตรวจสอบไฟล์ทั้งหมดว่าเป็น PDF
+        for (let i = 0; i < req.files.length; i++) {
+            const file = req.files[i];
+            
+            // ตรวจสอบ MIME type
+            if (file.mimetype !== 'application/pdf') {
+                return res.status(400).json({ 
+                    error: `ไฟล์ที่ ${i + 1} ไม่ใช่ PDF (${file.originalname})` 
+                });
+            }
+
+            // ตรวจสอบ PDF header
+            const pdfHeader = file.buffer.slice(0, 5).toString();
+            if (!pdfHeader.startsWith('%PDF')) {
+                return res.status(400).json({ 
+                    error: `ไฟล์ที่ ${i + 1} ไม่ใช่ PDF ที่ถูกต้อง (${file.originalname})` 
+                });
+            }
+
+            // ตรวจสอบขนาดไฟล์
+            if (file.buffer.length === 0) {
+                return res.status(400).json({ 
+                    error: `ไฟล์ที่ ${i + 1} ว่างเปล่า (${file.originalname})` 
+                });
+            }
+        }
+
+        console.log(`กำลังรวม PDF: ${req.files.length} ไฟล์`);
+
         const mergedPdf = await PDFDocument.create();
         
-        for (const file of req.files) {
-            const pdfBuffer = file.buffer;
-            const pdf = await PDFDocument.load(pdfBuffer);
-            const copiedPages = await mergedPdf.copyPages(pdf, pdf.getPageIndices());
-            copiedPages.forEach((page) => mergedPdf.addPage(page));
+        for (let i = 0; i < req.files.length; i++) {
+            const file = req.files[i];
+            try {
+                const pdfBuffer = file.buffer;
+                const pdf = await PDFDocument.load(pdfBuffer);
+                const copiedPages = await mergedPdf.copyPages(pdf, pdf.getPageIndices());
+                copiedPages.forEach((page) => mergedPdf.addPage(page));
+                console.log(`เพิ่มไฟล์ ${i + 1}: ${file.originalname} (${pdf.getPageCount()} หน้า)`);
+            } catch (fileError) {
+                return res.status(400).json({ 
+                    error: `ไม่สามารถประมวลผลไฟล์ที่ ${i + 1} (${file.originalname}): ${fileError.message}` 
+                });
+            }
         }
         
         const mergedPdfBytes = await mergedPdf.save();
+        
+        console.log(`รวม PDF สำเร็จ: ${(mergedPdfBytes.length / 1024 / 1024).toFixed(2)} MB`);
         
         res.setHeader('Content-Type', 'application/pdf');
         res.setHeader('Content-Disposition', 'attachment; filename="merged.pdf"');
@@ -205,8 +283,20 @@ app.post('/api/merge-pdf', upload.array('files', 10), async (req, res) => {
 
     } catch (error) {
         console.error('Merge error:', error);
+        
+        // ส่ง error message ที่เข้าใจง่าย
+        let errorMessage = 'เกิดข้อผิดพลาดในการรวมไฟล์';
+        
+        if (error.message.includes('No PDF header found')) {
+            errorMessage = 'มีไฟล์ที่ไม่ใช่ PDF ที่ถูกต้อง กรุณาตรวจสอบไฟล์ทั้งหมดและลองใหม่';
+        } else if (error.message.includes('Failed to parse PDF')) {
+            errorMessage = 'มีไฟล์ PDF เสียหายหรือมีรูปแบบที่ไม่รองรับ กรุณาลองใช้ไฟล์ PDF อื่น';
+        } else if (error.message.includes('LIMIT_FILE_SIZE')) {
+            errorMessage = 'ไฟล์มีขนาดใหญ่เกินไป (จำกัด 10MB สำหรับ Vercel)';
+        }
+        
         res.status(500).json({ 
-            error: 'เกิดข้อผิดพลาดในการรวมไฟล์: ' + error.message 
+            error: errorMessage
         });
     }
 });
