@@ -459,50 +459,167 @@ function scrollToServices() {
     });
 }
 
-// Add some interactive animations
+// Contact form handling
 document.addEventListener('DOMContentLoaded', function() {
-    // Animate service cards on scroll
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
+    const contactForm = document.querySelector('.contact-form-container');
     
-    const observer = new IntersectionObserver(function(entries) {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.animation = 'fadeInUp 0.6s ease forwards';
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(contactForm);
+            const name = contactForm.querySelector('input[type="text"]').value;
+            const email = contactForm.querySelector('input[type="email"]').value;
+            const subject = contactForm.querySelector('select').value;
+            const message = contactForm.querySelector('textarea').value;
+            
+            // Simple validation
+            if (!name || !email || !subject || !message) {
+                showNotification('กรุณากรอกข้อมูลให้ครบถ้วน', 'error');
+                return;
+            }
+            
+            // Show loading state
+            const submitBtn = contactForm.querySelector('.submit-btn');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> กำลังส่ง...';
+            submitBtn.disabled = true;
+            
+            // Simulate sending email (in real app, you'd send to server)
+            setTimeout(() => {
+                // Create mailto link with form data
+                const mailtoLink = `mailto:timetrackerud01@gmail.com?subject=${encodeURIComponent(getSubjectText(subject))}&body=${encodeURIComponent(
+                    `ชื่อ: ${name}\nอีเมล: ${email}\nหัวข้อ: ${getSubjectText(subject)}\n\nข้อความ:\n${message}\n\n---\nส่งจากเว็บไซต์ PDF Converter Thailand`
+                )}`;
+                
+                // Open email client
+                window.location.href = mailtoLink;
+                
+                // Reset form
+                contactForm.reset();
+                
+                // Reset button
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+                
+                showNotification('ข้อความถูกส่งแล้ว! กรุณาตรวจสอบโปรแกรมอีเมลของคุณ', 'success');
+            }, 1500);
+        });
+    }
+    
+    function getSubjectText(value) {
+        const subjects = {
+            'support': 'ขอความช่วยเหลือ - PDF Converter',
+            'bug': 'รายงานปัญหา - PDF Converter',
+            'feature': 'ขอฟีเจอร์ใหม่ - PDF Converter',
+            'other': 'อื่นๆ - PDF Converter'
+        };
+        return subjects[value] || 'ติดต่อเรา - PDF Converter';
+    }
+});
+
+// Enhanced scroll to contact section
+function scrollToContact() {
+    document.getElementById('contact').scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+    });
+}
+
+// Add smooth scrolling to all navigation links
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
             }
         });
-    }, observerOptions);
-    
-    // Observe service cards
-    document.querySelectorAll('.service-card').forEach(card => {
-        observer.observe(card);
-    });
-    
-    // Observe feature items
-    document.querySelectorAll('.feature-item').forEach(item => {
-        observer.observe(item);
     });
 });
 
-// Add fadeInUp animation
-const fadeInUpStyle = document.createElement('style');
-fadeInUpStyle.textContent = `
-    @keyframes fadeInUp {
-        from {
-            opacity: 0;
-            transform: translateY(30px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
+// Add typing effect for hero section
+document.addEventListener('DOMContentLoaded', function() {
+    const heroTitle = document.querySelector('.hero-content h2');
+    if (heroTitle) {
+        const text = heroTitle.textContent;
+        heroTitle.textContent = '';
+        
+        let i = 0;
+        const typeWriter = () => {
+            if (i < text.length) {
+                heroTitle.textContent += text.charAt(i);
+                i++;
+                setTimeout(typeWriter, 50);
+            }
+        };
+        
+        // Start typing after a short delay
+        setTimeout(typeWriter, 500);
+    }
+});
+
+// Add floating animation to contact icons
+document.addEventListener('DOMContentLoaded', function() {
+    const contactIcons = document.querySelectorAll('.contact-icon');
+    contactIcons.forEach((icon, index) => {
+        icon.style.animationDelay = `${index * 0.2}s`;
+        icon.classList.add('floating-icon');
+    });
+});
+
+// Add floating icon animation CSS
+const floatingIconStyle = document.createElement('style');
+floatingIconStyle.textContent = `
+    @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
     }
     
-    .service-card,
-    .feature-item {
-        opacity: 0;
+    .floating-icon {
+        animation: float 3s ease-in-out infinite;
+    }
+    
+    .contact-item:hover .floating-icon {
+        animation-play-state: paused;
+        transform: scale(1.1);
     }
 `;
-document.head.appendChild(fadeInUpStyle);
+document.head.appendChild(floatingIconStyle);
+
+// SEO: Add structured data for better search engine understanding
+const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "PDF Converter Thailand",
+    "description": "เครื่องมือแปลงไฟล์ออนไลน์ฟรี รองรับ Word เป็น PDF, Excel เป็น PDF, PowerPoint เป็น PDF, ลดขนาด PDF, รวม PDF, แยก PDF",
+    "url": "https://pdf-to-word.vercel.app",
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "Web Browser",
+    "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "THB"
+    },
+    "author": {
+        "@type": "Person",
+        "name": "TimetrackerUD01",
+        "url": "https://github.com/TimetrackerUD01"
+    },
+    "contactPoint": {
+        "@type": "ContactPoint",
+        "email": "timetrackerud01@gmail.com",
+        "contactType": "customer support"
+    }
+};
+
+// Inject structured data
+const script = document.createElement('script');
+script.type = 'application/ld+json';
+script.textContent = JSON.stringify(structuredData);
+document.head.appendChild(script);

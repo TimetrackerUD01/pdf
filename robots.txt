@@ -1,0 +1,18 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://pdf-to-word.vercel.app/sitemap.xml
+
+# Disallow sensitive areas
+Disallow: /uploads/
+Disallow: /output/
+Disallow: /api/
+Disallow: /*.json$
+Disallow: /*.md$
+
+# Allow specific files
+Allow: /index.html
+Allow: /style.css
+Allow: /script.js
+Allow: /sitemap.xml
